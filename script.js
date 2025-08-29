@@ -1,23 +1,4 @@
-// Dropdown effect
-// const plusIcon = document.getElementById("plus");
-// const minusIcon = document.getElementById("minus")
-// const cardContent = document.getElementById("content")
-
-// // Onclick of the icon show content
-// plusIcon.addEventListener("click", () => {
-//   cardContent.style.display = "flex";
-//   plusIcon.style.display = "none";
-//   minusIcon.style.display = "flex";
-// })
-  
-// // Hide content
-// minusIcon.addEventListener("click", () => {
-//   cardContent.style.display = "none";
-//   minusIcon.style.display = "none";
-//   plusIcon.style.display = "flex";  
-// })
-
-
+// Dropdown card
 const cards = document.querySelectorAll(".drop-down-card");
 
 cards.forEach(card => {
@@ -37,3 +18,18 @@ cards.forEach(card => {
     plusIcon.style.display = "inline";
   });
 });
+
+
+// ClOSE MENU FOR MOBILE
+const menuIcon = document.getElementById("hamburger");
+const closeIcon = document.getElementById("close");
+const mobileMenuShow = document.getElementById("mobileMenu");
+
+
+menuIcon.addEventListener("click", () => {
+  mobileMenu.style.display = "block";
+})
+
+closeIcon.addEventListener("click", () => {
+  mobileMenu.style.display = "none";
+})

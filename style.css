@@ -40,6 +40,7 @@
     --dark-bg-hover:rgba(255, 255, 255, 0.08);
     --stroke-color: rgba(255, 255, 255, 0.1);
     --box-shadow:0 4px 16px 0 rgba(255, 62, 165, 0.5);
+    --mobile-menu-bg: rgb(41, 42, 42);
 }
 
 .main-container{
@@ -167,7 +168,7 @@
   flex-direction: column;
   justify-content: start;
   align-items: start;
-  gap: 2rem;
+  gap: 3rem;
   background-color: var(--dark-bg);
   padding: 1rem;
   position: absolute;
@@ -194,6 +195,7 @@
 .close i{
   font-size: 1rem;
   color: var(--white-color);
+  cursor: pointer;
 }
 
 
@@ -205,6 +207,7 @@
   justify-content: start;
   align-items: start;
   gap: 2rem;
+  padding-top: 2rem;
 }
 
 .mobile-nav-links a{
@@ -1985,18 +1988,19 @@ textarea{
     /* MOBILE MENU */
     .mobile-menu {
       width: 100%;
-      height: auto;
+      height: 100vh;
       display: none;
       flex-direction: column;
       justify-content: start;
       align-items: start;
       gap: 2rem;
-      background-color: var(--dark-bg);
+      background-color: var(--mobile-menu-bg);
       padding: 1rem;
       position: absolute;
       top: 0;
       left: 0;
       border-radius: var(--border-radius);
+      z-index: 100;
     }
   
     .menu-header {
