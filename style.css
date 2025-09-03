@@ -230,6 +230,9 @@
 .hero-video{
   width: 100%;
   height: auto;
+  border: 1px solid var(--stroke-color);
+  border-radius: var(--border-radius);
+  overflow: hidden;
 }
 
 .hero-video iframe{
