@@ -1712,10 +1712,13 @@ textarea {
      }
   
      .brands-row img {
-       width: 250px;
+       width: 150px;
        height: auto;
        display: flex;
        flex-direction: row;
+       justify-content: space-between;
+       align-items: start;
+       gap: 1rem;
      }
   
      /* REVIEW SECTION */
