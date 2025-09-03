@@ -1630,14 +1630,14 @@ textarea {
      }
   
      .client-text-cont h3 {
-       width: 80%;
+       width: 100%;
        font-size: 3rem;
        font-weight: 900;
      }
   
      .client-text-cont p {
        font-weight: 300;
-       width: 80%;
+       width: 100%;
      }
   
      .button-container {
