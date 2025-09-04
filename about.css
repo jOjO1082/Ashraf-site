@@ -406,7 +406,8 @@
 
 .team-card img{
   width: 100%;
-  height: auto;
+  height: 253px;
+  object-fit: cover;
 }
 
 .name-and-role-and-button{
@@ -1063,7 +1064,7 @@ textarea {
   
     .team-card img {
       width: 100%;
-      height: auto;
+      height: 150px;
     }
   
     .name-and-role-and-button {
@@ -1857,7 +1858,7 @@ textarea {
 
 .team-card img {
   width: 100%;
-  height: auto;
+  height: 200px;
 }
 
 .name-and-role-and-button {
