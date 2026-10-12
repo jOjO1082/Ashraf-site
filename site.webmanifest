@@ -1,0 +1,26 @@
+{
+  "name": "Ashnimator Studios",
+  "short_name": "Ashnimator",
+  "description": "Cinematic visuals that perform — films, animations, graphics, and campaigns from Abuja, Nigeria.",
+  "icons": [
+    {
+      "src": "assets/img/favicon-32x32.png",
+      "sizes": "32x32",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/img/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png"
+    },
+    {
+      "src": "assets/img/logo.png",
+      "sizes": "350x350",
+      "type": "image/png"
+    }
+  ],
+  "theme_color": "#0a0908",
+  "background_color": "#0a0908",
+  "display": "standalone",
+  "start_url": "/"
+}

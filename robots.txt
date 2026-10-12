@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://ashnimatorstudios.netlify.app/sitemap.xml
