@@ -2322,119 +2322,265 @@ body.menu-open {
    Academy / Training Page
    ========================================================================== */
 
-/* Training Hero */
+/* ==========================================================================
+   Academy / Training Page - Blended Cinematic Hero
+   ========================================================================== */
+
+/* Training Hero Section */
 .training-hero-wrap {
   position: relative;
-  overflow: hidden;
-}
-.training-hero {
-  display: grid;
-  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
-  gap: clamp(2.5rem, 5vw, 5.5rem);
-  align-items: center;
-}
-.training-hero__visual {
-  position: relative;
+  min-height: clamp(580px, 84vh, 840px);
   display: flex;
   align-items: center;
-  justify-content: center;
-  border-radius: var(--radius);
+  padding: calc(var(--nav-h) + clamp(2.5rem, 5vw, 4.5rem)) 0 clamp(3.5rem, 6vw, 5.5rem);
+  background: #090807;
+  overflow: hidden;
+  border-bottom: 1px solid var(--line);
   isolation: isolate;
 }
-.training-hero__visual::before {
-  content: "";
-  position: absolute;
-  inset: -10%;
-  border-radius: 50%;
-  background: radial-gradient(closest-side, rgba(242, 163, 60, 0.28), rgba(229, 112, 42, 0.12), transparent);
-  filter: blur(45px);
-  z-index: 0;
-  pointer-events: none;
-}
-.training-hero__frame {
-  position: relative;
-  z-index: 1;
-  width: 100%;
-  border-radius: var(--radius);
-  overflow: hidden;
-  box-shadow: 0 30px 60px -15px rgba(0, 0, 0, 0.8), inset 0 0 0 1px var(--line-2);
-  background: var(--surface);
-  aspect-ratio: 16 / 10;
-}
-.training-hero__frame img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  object-position: center 20%;
-  transition: transform 1.2s var(--ease);
-}
-.training-hero__frame:hover img {
-  transform: scale(1.04);
-}
-.training-hero__frame::after {
+
+/* Ambient warm lighting behind the subject */
+.training-hero-wrap::before {
   content: "";
   position: absolute;
   inset: 0;
-  border-radius: inherit;
-  box-shadow: inset 0 0 0 1px var(--line-2), inset 0 -90px 100px -30px rgba(10, 9, 8, 0.9);
+  background:
+    radial-gradient(55rem 45rem at 82% 48%, rgba(242, 163, 60, 0.22), transparent 70%),
+    radial-gradient(40rem 35rem at 95% 24%, rgba(229, 112, 42, 0.16), transparent 65%),
+    radial-gradient(35rem 30rem at 10% 25%, rgba(242, 163, 60, 0.05), transparent 70%);
   pointer-events: none;
-}
-.training-hero__badge {
-  position: absolute;
-  bottom: 1.5rem;
-  left: 1.5rem;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.6rem;
-  padding: 0.55rem 1.1rem;
-  border-radius: 999px;
-  background: rgba(10, 9, 8, 0.85);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
-  border: 1px solid rgba(242, 163, 60, 0.45);
-  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.5);
-  font-size: 0.76rem;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--text);
-  font-weight: 600;
-}
-.training-hero__badge .badge-dot {
-  width: 7px;
-  height: 7px;
-  border-radius: 50%;
-  background: var(--amber);
-  box-shadow: 0 0 10px var(--amber);
-}
-.training-hero__floating {
-  position: absolute;
-  top: 1.2rem;
-  right: 1.2rem;
-  z-index: 3;
-  display: inline-flex;
-  align-items: center;
-  gap: 0.5rem;
-  padding: 0.45rem 0.95rem;
-  border-radius: 999px;
-  background: rgba(22, 19, 16, 0.88);
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  border: 1px solid var(--line-2);
-  font-size: 0.74rem;
-  color: var(--amber-2);
-  font-weight: 500;
+  z-index: 0;
 }
 
+/* Full-bleed Backdrop Media (spans 100% width - eliminates any hard crop edges) */
+.training-hero__backdrop {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1;
+  pointer-events: none;
+  overflow: hidden;
+}
+
+.training-hero__backdrop-img {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+  object-position: right 30%;
+  display: block;
+  /* Single, cross-browser reliable fade mask without composite conflicts */
+  -webkit-mask-image: linear-gradient(to right, transparent 0%, transparent 22%, rgba(0, 0, 0, 0.5) 44%, #000000 68%);
+  mask-image: linear-gradient(to right, transparent 0%, transparent 22%, rgba(0, 0, 0, 0.5) 44%, #000000 68%);
+  transition: transform 1.8s var(--ease);
+}
+
+.training-hero-wrap:hover .training-hero__backdrop-img {
+  transform: scale(1.02);
+}
+
+/* Full-bleed gradient fade overlays guarantee smooth fade even without mask support */
+.training-hero__backdrop-fade {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+  z-index: 2;
+  background: 
+    /* Horizontal soft fade: 100% dark behind text, dissolving gradually toward the right */
+    linear-gradient(to right, 
+      #090807 0%, 
+      #090807 28%, 
+      rgba(9, 8, 7, 0.95) 42%, 
+      rgba(9, 8, 7, 0.65) 54%, 
+      rgba(9, 8, 7, 0.15) 70%, 
+      transparent 84%
+    ),
+    /* Bottom blend into stats */
+    linear-gradient(to top, #090807 0%, rgba(9, 8, 7, 0.8) 6%, transparent 22%),
+    /* Top blend under nav */
+    linear-gradient(to bottom, #090807 0%, rgba(9, 8, 7, 0.5) 5%, transparent 16%);
+}
+
+/* Content Container */
+.training-hero__container {
+  position: relative;
+  z-index: 5;
+  width: 100%;
+}
+
+.training-hero__content {
+  max-width: clamp(520px, 48vw, 720px);
+}
+
+/* Eyebrow with amber accent dash */
+.training-hero__eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.85rem;
+  font-family: var(--ff-body);
+  font-size: clamp(0.76rem, 0.9vw, 0.86rem);
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(243, 236, 225, 0.85);
+  margin-bottom: clamp(1.2rem, 2vw, 1.6rem);
+}
+
+.training-hero__eyebrow-bar {
+  display: inline-block;
+  width: 24px;
+  height: 2px;
+  background: var(--amber);
+  border-radius: 2px;
+  box-shadow: 0 0 10px rgba(242, 163, 60, 0.6);
+  flex-shrink: 0;
+}
+
+/* Headline: 2 clean bold lines (45% bigger font) */
+.training-hero-wrap .training-hero__title,
+.training-hero__title {
+  font-family: var(--ff-display);
+  font-size: clamp(2.72rem, 5vw, 4.7rem);
+  font-weight: 700;
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  margin-bottom: clamp(1.2rem, 2vw, 1.6rem);
+}
+
+.training-hero__title-l1 {
+  display: block;
+  color: #ffffff;
+  white-space: nowrap;
+}
+
+.training-hero__title-l2 {
+  display: block;
+  color: var(--amber);
+  font-style: normal;
+  white-space: nowrap;
+}
+
+/* Paragraph text */
+.training-hero__text {
+  max-width: 44ch;
+  margin-bottom: clamp(1.8rem, 2.6vw, 2.2rem);
+}
+
+.training-hero__text p {
+  color: rgba(243, 236, 225, 0.78);
+  font-size: clamp(1rem, 1.25vw, 1.12rem);
+  line-height: 1.6;
+  margin-bottom: 0.75rem;
+}
+
+.training-hero__text p:last-child {
+  margin-bottom: 0;
+}
+
+/* Pill CTA Buttons */
+.training-hero__cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1.1rem;
+  align-items: center;
+}
+
+.training-hero__btn-primary {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.92rem 1.95rem;
+  border-radius: 999px;
+  background: var(--amber);
+  color: #0a0908 !important;
+  font-family: var(--ff-display);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  box-shadow: 0 8px 24px -6px rgba(242, 163, 60, 0.45);
+  transition: transform 0.3s var(--ease), box-shadow 0.3s var(--ease), background 0.3s;
+  text-decoration: none;
+}
+
+.training-hero__btn-primary:hover {
+  transform: translateY(-2px);
+  background: var(--amber-2);
+  box-shadow: 0 14px 30px -6px rgba(242, 163, 60, 0.65);
+}
+
+.training-hero__btn-primary svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.training-hero__btn-primary:hover svg {
+  transform: translateX(3px);
+}
+
+.training-hero__btn-ghost {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.65rem;
+  padding: 0.88rem 1.85rem;
+  border-radius: 999px;
+  background: rgba(18, 15, 12, 0.6);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid rgba(243, 236, 225, 0.25);
+  color: #ffffff !important;
+  font-family: var(--ff-display);
+  font-weight: 500;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  transition: transform 0.3s var(--ease), border-color 0.3s, background 0.3s, color 0.3s;
+  text-decoration: none;
+}
+
+.training-hero__btn-ghost:hover {
+  transform: translateY(-2px);
+  border-color: rgba(242, 163, 60, 0.6);
+  background: rgba(242, 163, 60, 0.09);
+  color: var(--amber-2) !important;
+}
+
+.training-hero__btn-ghost svg {
+  transition: transform 0.3s var(--ease);
+}
+
+.training-hero__btn-ghost:hover svg {
+  transform: translateX(3px);
+}
+
+/* Tablet & Mobile responsive */
 @media (max-width: 960px) {
-  .training-hero {
-    grid-template-columns: 1fr;
-    gap: 3rem;
+  .training-hero-wrap {
+    min-height: auto;
+    padding-top: calc(var(--nav-h) + 3rem);
+    padding-bottom: 4rem;
   }
-  .training-hero__visual {
-    max-width: 580px;
+  .training-hero__content {
+    max-width: 100%;
+  }
+  .training-hero__title-l1,
+  .training-hero__title-l2 {
+    white-space: normal;
+  }
+  .training-hero__backdrop {
     width: 100%;
-    margin-inline: auto;
+  }
+  .training-hero__backdrop-img {
+    opacity: 0.38;
+    object-position: 70% center;
+    -webkit-mask-image: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 75%, transparent 100%);
+    mask-image: linear-gradient(to bottom, rgba(0,0,0,0.85) 0%, rgba(0,0,0,0.2) 75%, transparent 100%);
+  }
+  .training-hero__backdrop-fade {
+    background: 
+      linear-gradient(to top, #090807 10%, rgba(9, 8, 7, 0.85) 55%, rgba(9, 8, 7, 0.5) 100%);
   }
 }
 
