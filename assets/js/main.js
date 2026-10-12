@@ -354,6 +354,36 @@
   }
 
   /* ------------------------------------------------------------------ *
+   * Training: course category filter
+   * ------------------------------------------------------------------ */
+  function initTrainingCourses() {
+    const buttons = $$("[data-course-filter]");
+    const cards = $$(".course-card");
+    const grid = $(".course-grid");
+    if (!buttons.length || !cards.length || !grid) return;
+
+    buttons.forEach((btn) => {
+      btn.addEventListener("click", () => {
+        const key = btn.dataset.courseFilter;
+        buttons.forEach((b) => b.setAttribute("aria-pressed", String(b === btn)));
+        const visible = [];
+        cards.forEach((card) => {
+          const cat = card.dataset.category || "";
+          const show = key === "all" || cat.split(" ").includes(key);
+          card.hidden = !show;
+          if (show) visible.push(card);
+        });
+        if (hasGSAP && !reduceMotion.matches) {
+          gsap.fromTo(visible, { opacity: 0, y: 28 }, { opacity: 1, y: 0, duration: 0.7, stagger: 0.05, ease: "power3.out", overwrite: true });
+          ScrollTrigger.refresh();
+        } else {
+          visible.forEach((c) => (c.style.opacity = 1));
+        }
+      });
+    });
+  }
+
+  /* ------------------------------------------------------------------ *
    * Services accordion
    * ------------------------------------------------------------------ */
   function initServices() {
@@ -585,6 +615,7 @@
   initGlow();
   initForms();
   initWork();
+  initTrainingCourses();
   initHeroVideo();
   initMotion();
 })();
