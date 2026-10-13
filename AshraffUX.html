@@ -1,0 +1,2233 @@
+<!doctype html>
+<html>
+
+<head>
+  <meta charset=utf8>
+  <meta name=viewport content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="icon" type="image/png" sizes="32x32" href="assets/img/favicon-32x32.png">
+  <link rel="apple-touch-icon" sizes="180x180" href="assets/img/apple-touch-icon.png">
+  <style>
+    :root {
+      color-scheme: light;
+      box-sizing: border-box;
+      padding-top: env(safe-area-inset-top, 0px);
+      padding-bottom: env(safe-area-inset-bottom, 0px)
+    }
+
+    html {
+      scroll-padding-top: env(safe-area-inset-top, 0px)
+    }
+
+    body {
+      margin: 0;
+      padding: 0;
+      font: 14px -apple-system, BlinkMacSystemFont, sans-serif;
+      background: #fff;
+      color: #000
+    }
+
+    img {
+      max-width: 100%
+    }
+
+    [hidden]:not([hidden=until-found i]) {
+      display: none !important
+    }
+  </style>
+</head>
+
+<body>
+  <title>Ashraff UI/UX</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link rel="stylesheet"
+    href="https://fonts.googleapis.com/css2?family=Anton&family=Archivo:wght@400;500;600;700;800&family=DM+Mono:wght@400;500&display=swap">
+  <style>
+    /* Layout: stone-paper ground. Dark hero panel with a giant name and a marble bust overlapping the letters, torn paper edges, big condensed statements, dark green feature panel, red case panel, black CTA panel with a second bust. Single committed look (light paper + dark panels). */
+    :root {
+      --paper: #e8e6e1;
+      --paper2: #dad7d0;
+      --ink: #0a0a0c;
+      --mut: #5d5d58;
+      --white: #f7f6f2;
+      --teal: #25c9a4;
+      --teal-t: #0a8f73;
+      --red: #e0252f;
+      --red-d: #5a0910;
+      --green: #0b4a3b;
+      --green-d: #04130f;
+      --yellow: #ffc21a;
+      --display: 'Anton', 'Impact', 'Arial Narrow', sans-serif;
+      --body: 'Archivo', 'Segoe UI', system-ui, sans-serif;
+      --mono: 'DM Mono', ui-monospace, Menlo, monospace;
+      color-scheme: light;
+    }
+
+    * {
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth;
+      overflow-x: hidden
+    }
+
+    body {
+      background-color: var(--paper);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='2' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 .11 0'/%3E%3C/filter%3E%3Crect width='180' height='180' filter='url(%23n)'/%3E%3C/svg%3E");
+      color: var(--ink);
+      font-family: var(--body);
+      font-size: 16px;
+      line-height: 1.55;
+      padding-inline: 16px;
+      overflow-x: hidden;
+      margin: 0;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    p {
+      margin: 0
+    }
+
+    h1,
+    h2,
+    h3 {
+      font-family: var(--display);
+      font-weight: 400;
+      text-transform: uppercase;
+      margin: 0;
+      line-height: .95;
+      text-wrap: balance
+    }
+
+    :focus-visible {
+      outline: 3px solid var(--teal-t);
+      outline-offset: 3px;
+      border-radius: 8px
+    }
+
+    .wrap {
+      max-width: 1240px;
+      margin-inline: auto
+    }
+
+    .mono {
+      font-family: var(--mono);
+      font-size: .74rem;
+      letter-spacing: .14em;
+      text-transform: uppercase
+    }
+
+    .progress {
+      position: fixed;
+      left: 0;
+      top: 0;
+      height: 4px;
+      width: 100%;
+      transform-origin: 0 50%;
+      transform: scaleX(0);
+      background: var(--red);
+      z-index: 90
+    }
+
+    /* buttons */
+    .yb {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--yellow);
+      color: var(--ink);
+      font-family: var(--display);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-size: 1.02rem;
+      padding: 15px 26px;
+      border-radius: 6px;
+      border: 0;
+      cursor: pointer;
+      box-shadow: 5px 5px 0 var(--ink);
+      transition: transform .18s, box-shadow .18s
+    }
+
+    .yb:hover {
+      transform: translate(-2px, -2px);
+      box-shadow: 8px 8px 0 var(--ink)
+    }
+
+    .yb:active {
+      transform: translate(4px, 4px);
+      box-shadow: 1px 1px 0 var(--ink)
+    }
+
+    .yb svg,
+    .ghost svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.6
+    }
+
+    .ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      font-family: var(--display);
+      text-transform: uppercase;
+      letter-spacing: .04em;
+      font-size: 1.02rem;
+      padding: 13px 24px;
+      border-radius: 6px;
+      border: 2px solid currentColor;
+      transition: background .2s, color .2s
+    }
+
+    .ghost:hover {
+      background: var(--white);
+      color: var(--ink)
+    }
+
+    /* nav */
+    nav {
+      position: sticky;
+      top: env(safe-area-inset-top, 0px);
+      z-index: 80;
+      height: 72px;
+      margin-bottom: -72px;
+      display: flex;
+      align-items: center
+    }
+
+    .nav {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 14px;
+      padding: 9px 10px 9px 20px;
+      border-radius: 999px;
+      background: rgba(10, 10, 12, .72);
+      backdrop-filter: blur(14px);
+      -webkit-backdrop-filter: blur(14px);
+      border: 1px solid rgba(255, 255, 255, .14);
+      color: var(--white)
+    }
+
+    .logo {
+      font-family: var(--display);
+      font-size: 1.25rem;
+      letter-spacing: .04em;
+      text-transform: uppercase;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .logo b {
+      width: 10px;
+      height: 10px;
+      background: var(--red);
+      display: block;
+      transform: rotate(45deg);
+      animation: spin 6s linear infinite
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(405deg)
+      }
+    }
+
+    .links {
+      display: flex;
+      align-items: center;
+      gap: clamp(14px, 1.8vw, 24px);
+      font-family: var(--mono);
+      font-size: .76rem;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      white-space: nowrap
+    }
+
+    .links a {
+      opacity: .75;
+      transition: opacity .2s, color .2s
+    }
+
+    .links a:hover {
+      opacity: 1;
+      color: var(--teal)
+    }
+
+    .nav .yb {
+      padding: 9px 18px;
+      font-size: .88rem;
+      box-shadow: 3px 3px 0 #000
+    }
+
+    /* hero */
+    .hero {
+      position: relative;
+      margin-inline: -16px;
+      background: radial-gradient(900px 520px at 12% 100%, rgba(224, 37, 47, .75), transparent 60%), radial-gradient(700px 400px at 100% 0, rgba(224, 37, 47, .28), transparent 60%), linear-gradient(180deg, #141416, #0a0a0c);
+      color: var(--white);
+      overflow: hidden;
+      padding-inline: 16px;
+      padding-top: 96px
+    }
+
+    .hero::after {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background-image: radial-gradient(rgba(255, 255, 255, .07) 1px, transparent 1.2px);
+      background-size: 22px 22px;
+      mask-image: linear-gradient(180deg, #000, transparent 80%);
+      -webkit-mask-image: linear-gradient(180deg, #000, transparent 80%);
+      pointer-events: none
+    }
+
+    .hero-in {
+      max-width: 1380px;
+      margin-inline: auto;
+      position: relative
+    }
+
+    .meta {
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      color: #b8b6b0;
+      position: relative;
+      z-index: 5
+    }
+
+    .stage {
+      position: relative;
+      height: clamp(440px, 54vw, 740px);
+      margin-top: 10px
+    }
+
+    .name {
+      position: absolute;
+      left: 0;
+      right: 0;
+      top: 3%;
+      text-align: center;
+      font-size: clamp(4.4rem, 23.5vw, 21rem);
+      line-height: .84;
+      letter-spacing: .005em;
+      white-space: nowrap;
+      z-index: 1;
+      display: flex;
+      justify-content: center;
+      color: var(--white)
+    }
+
+    .name span {
+      display: inline-block;
+      overflow: hidden;
+      padding-top: .04em
+    }
+
+    .name span i {
+      display: block;
+      font-style: normal;
+      animation: letter 1s cubic-bezier(.2, .8, .2, 1) both;
+      animation-delay: calc(var(--i)*.07s + .1s)
+    }
+
+    @keyframes letter {
+      from {
+        transform: translateY(105%)
+      }
+
+      to {
+        transform: none
+      }
+    }
+
+    .bust {
+      position: absolute;
+      right: -2%;
+      bottom: -2%;
+      height: 96%;
+      aspect-ratio: 1800/1128;
+      z-index: 3;
+      filter: drop-shadow(0 30px 40px rgba(0, 0, 0, .55));
+      transition: transform .2s ease-out
+    }
+
+    .bust .rise {
+      position: absolute;
+      inset: 0;
+      animation: bustin 1.3s .35s cubic-bezier(.2, .8, .2, 1) both
+    }
+
+    .bust .float {
+      position: relative;
+      width: 100%;
+      height: 100%
+    }
+
+    .bust .statue {
+      display: block;
+      width: 100%;
+      height: 100%
+    }
+
+    .glow {
+      position: absolute;
+      left: 34%;
+      top: 24%;
+      width: 19%;
+      height: 17%;
+      border-radius: 50%;
+      background: radial-gradient(ellipse, rgba(255, 150, 30, .9), rgba(255, 120, 20, 0) 68%);
+      mix-blend-mode: screen;
+      pointer-events: none;
+      animation: glow 3.2s ease-in-out infinite
+    }
+
+    @keyframes glow {
+
+      0%,
+      100% {
+        opacity: .25;
+        transform: scale(.9)
+      }
+
+      50% {
+        opacity: .85;
+        transform: scale(1.12)
+      }
+    }
+
+    @keyframes bustin {
+      from {
+        transform: translateY(8%);
+        opacity: 0
+      }
+
+      to {
+        transform: none;
+        opacity: 1
+      }
+    }
+
+    .reveal {
+      position: relative;
+      display: block;
+      width: 100%;
+      height: 100%;
+      touch-action: pan-y
+    }
+
+    .reveal img {
+      position: absolute;
+      inset: 0;
+      width: 100%;
+      height: 100%;
+      display: block;
+      user-select: none;
+      -webkit-user-drag: none
+    }
+
+    .reveal .col {
+      --rx: -300px;
+      --ry: -300px;
+      --rr: 120px;
+      -webkit-mask-image: radial-gradient(circle var(--rr) at var(--rx) var(--ry), #000 calc(100% - 3px), transparent 100%);
+      mask-image: radial-gradient(circle var(--rr) at var(--rx) var(--ry), #000 calc(100% - 3px), transparent 100%)
+    }
+
+    .float {
+      animation: bob 7s ease-in-out infinite
+    }
+
+    @keyframes bob {
+      50% {
+        transform: translateY(-12px)
+      }
+    }
+
+    .bottom {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 6%;
+      z-index: 5;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 20px;
+      pointer-events: none
+    }
+
+    .bottom>* {
+      pointer-events: auto
+    }
+
+    .hero-copy {
+      max-width: 330px;
+      display: flex;
+      flex-direction: column;
+      gap: 22px
+    }
+
+    .hero-copy .big {
+      font-family: var(--display);
+      font-size: clamp(2.2rem, 4vw, 3.4rem);
+      line-height: .95;
+      text-transform: uppercase
+    }
+
+    .hero-copy .big em {
+      font-style: normal;
+      color: var(--teal)
+    }
+
+    .hero-copy p {
+      color: #d6d4ce;
+      font-size: 1rem
+    }
+
+    .hero-copy .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      align-items: center
+    }
+
+    .hero-note {
+      text-align: right;
+      max-width: 260px;
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: flex-end
+    }
+
+    .hero-note .big {
+      font-family: var(--display);
+      font-size: 2.6rem;
+      line-height: .95;
+      text-transform: uppercase
+    }
+
+    .hero-note .big em {
+      font-style: normal;
+      color: var(--teal)
+    }
+
+    .hint {
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      color: #b8b6b0
+    }
+
+    .hint::before {
+      content: "";
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: var(--red);
+      animation: pulse 1.6s infinite
+    }
+
+    @keyframes pulse {
+      50% {
+        opacity: .25;
+        transform: scale(.7)
+      }
+    }
+
+    /* torn edge */
+    .tear {
+      position: relative
+    }
+
+    .tear::before {
+      content: "";
+      position: absolute;
+      left: -16px;
+      right: -16px;
+      top: -34px;
+      height: 36px;
+      background-color: var(--paper);
+      z-index: 6;
+      -webkit-mask: var(--tear) 0 100%/100% 100% no-repeat;
+      mask: var(--tear) 0 100%/100% 100% no-repeat
+    }
+
+    section {
+      padding-block: clamp(54px, 8vw, 110px)
+    }
+
+    .label {
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      align-items: flex-end;
+      gap: 12px 24px;
+      margin-bottom: clamp(24px, 4vw, 44px)
+    }
+
+    .label h2 {
+      font-size: clamp(3rem, 9.4vw, 7.6rem);
+      letter-spacing: .005em
+    }
+
+    .label h2 em {
+      font-style: normal;
+      color: var(--teal-t)
+    }
+
+    .label p {
+      max-width: 36ch;
+      color: var(--mut)
+    }
+
+    /* statement */
+    .statement {
+      padding-top: clamp(70px, 9vw, 120px)
+    }
+
+    .stmt {
+      display: grid;
+      grid-template-columns: 170px 1fr 200px;
+      gap: 20px 30px;
+      align-items: start
+    }
+
+    .stmt>* {
+      min-width: 0
+    }
+
+    .stmt .side {
+      font-size: .84rem;
+      color: var(--mut);
+      padding-top: .6em
+    }
+
+    .stmt .side b {
+      display: block;
+      font-family: var(--mono);
+      font-weight: 500;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      font-size: .7rem;
+      color: var(--ink);
+      margin-bottom: 6px
+    }
+
+    .big-line {
+      font-family: var(--display);
+      text-transform: uppercase;
+      line-height: .92;
+      font-size: clamp(2.7rem, 7.4vw, 6.4rem);
+      letter-spacing: .004em
+    }
+
+    .stmt .main {
+      display: flex;
+      flex-direction: column;
+      overflow: hidden
+    }
+
+    .shift {
+      will-change: transform;
+      transition: transform .1s linear
+    }
+
+    .hl {
+      color: var(--teal-t)
+    }
+
+    .hr {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: .25em;
+      text-align: right
+    }
+
+    .seal {
+      display: inline-block;
+      color: var(--red);
+      font-size: .55em;
+      line-height: 1;
+      animation: spin2 12s linear infinite;
+      font-family: var(--body);
+      font-weight: 800
+    }
+
+    .stmt .right {
+      font-size: .84rem;
+      color: var(--mut);
+      text-align: right;
+      padding-top: .6em
+    }
+
+    /* ribbons */
+    .ribbons {
+      position: relative;
+      height: 176px;
+      margin-inline: -16px;
+      overflow: hidden;
+      margin-block: 10px
+    }
+
+    .rib {
+      position: absolute;
+      left: -5%;
+      width: 110%;
+      white-space: nowrap;
+      overflow: hidden;
+      font-family: var(--display);
+      text-transform: uppercase;
+      font-size: 1.7rem;
+      letter-spacing: .03em;
+      padding-block: 14px
+    }
+
+    .rib .t {
+      display: flex;
+      gap: 34px;
+      width: max-content;
+      animation: marq 38s linear infinite
+    }
+
+    .rib .t span {
+      display: flex;
+      align-items: center;
+      gap: 34px
+    }
+
+    .rib .t span::after {
+      content: "";
+      width: 12px;
+      height: 12px;
+      background: currentColor;
+      transform: rotate(45deg);
+      flex: none
+    }
+
+    .r1 {
+      background: var(--ink);
+      color: var(--white);
+      top: 26px;
+      transform: rotate(-1.8deg)
+    }
+
+    .r2 {
+      background: var(--teal);
+      color: var(--ink);
+      top: 92px;
+      transform: rotate(1.4deg)
+    }
+
+    .r2 .t {
+      animation-direction: reverse;
+      animation-duration: 46s
+    }
+
+    @keyframes marq {
+      to {
+        transform: translateX(-50%)
+      }
+    }
+
+    /* feature panel */
+    .feature {
+      position: relative;
+      display: grid;
+      grid-template-columns: 1.05fr 1fr;
+      gap: 20px;
+      align-items: center;
+      border-radius: 30px;
+      padding: clamp(24px, 5vw, 56px);
+      color: var(--white);
+      background: radial-gradient(700px 400px at 90% 10%, rgba(37, 201, 164, .4), transparent 60%), linear-gradient(135deg, var(--green), var(--green-d));
+      overflow: hidden;
+      min-height: 430px;
+      box-shadow: 0 30px 70px -30px rgba(4, 19, 15, .8)
+    }
+
+    .feature>* {
+      min-width: 0
+    }
+
+    .feature small {
+      color: var(--teal)
+    }
+
+    .feature h3 {
+      font-size: clamp(2.6rem, 6.4vw, 5.4rem);
+      margin-top: 14px
+    }
+
+    .feature h3 em {
+      font-style: normal;
+      color: var(--yellow)
+    }
+
+    .feature p {
+      margin-top: 18px;
+      color: #bfd8d0;
+      max-width: 36ch
+    }
+
+    .feature .yb {
+      margin-top: 28px
+    }
+
+    .feature>div:first-child {
+      position: relative;
+      z-index: 3;
+    }
+
+    .ft-vis {
+      position: relative;
+      height: 380px;
+    }
+
+    .ft-gif-wrap {
+      position: absolute;
+      right: 0;
+      top: 50%;
+      transform: translateY(-50%);
+      width: clamp(280px, 78%, 440px);
+      border-radius: 18px;
+      overflow: hidden;
+      border: 1px solid rgba(255, 255, 255, .2);
+      box-shadow: 0 30px 60px -20px #000;
+      background: #ffffff;
+      transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+      z-index: 1;
+    }
+
+    .ft-gif-wrap img {
+      width: 100%;
+      height: auto;
+      display: block;
+    }
+
+    .feature:hover .ft-gif-wrap {
+      transform: translateY(-53%) scale(1.02);
+    }
+
+    .phone {
+      position: absolute;
+      border-radius: 28px;
+      padding: 7px;
+      background: linear-gradient(160deg, #2c3a37, #0d1513);
+      border: 1px solid rgba(255, 255, 255, .18);
+      box-shadow: 0 30px 60px -20px #000;
+      transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+      z-index: 2;
+    }
+
+    .phone .scr {
+      border-radius: 22px;
+      background: #0a1412;
+      padding: 12px 10px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      height: 100%;
+      overflow: hidden
+    }
+
+    .ph1 {
+      left: -26%;
+      top: 8%;
+      width: 155px;
+      height: 285px;
+      transform: rotate(-6deg);
+    }
+
+    .ph2 {
+      left: 0%;
+      top: 26%;
+      width: 140px;
+      height: 250px;
+      transform: rotate(5deg);
+    }
+
+    .feature:hover .ph1 {
+      transform: rotate(-9deg) translateY(-8px);
+    }
+
+    .feature:hover .ph2 {
+      transform: rotate(8deg) translateY(-12px);
+    }
+
+    .b {
+      border-radius: 7px;
+      background: rgba(255, 255, 255, .13)
+    }
+
+    .b.g {
+      background: linear-gradient(90deg, var(--teal), var(--yellow))
+    }
+
+    .b.r {
+      background: linear-gradient(90deg, var(--red), #ff7a45)
+    }
+
+    .b.h {
+      height: 9px
+    }
+
+    .b.s {
+      height: 6px;
+      width: 60%
+    }
+
+    .vcard {
+      height: 62px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--teal), var(--green));
+      position: relative
+    }
+
+    .vcard::after {
+      content: "";
+      position: absolute;
+      right: 9px;
+      bottom: 8px;
+      width: 20px;
+      height: 13px;
+      border-radius: 3px;
+      background: rgba(255, 255, 255, .4)
+    }
+
+    .bars {
+      display: flex;
+      align-items: flex-end;
+      gap: 5px;
+      flex: 1
+    }
+
+    .bars i {
+      flex: 1;
+      border-radius: 3px 3px 0 0;
+      background: linear-gradient(180deg, var(--yellow), var(--red));
+      height: var(--h);
+      transform-origin: bottom;
+      animation: grow 2.4s ease-in-out infinite alternate;
+      animation-delay: calc(var(--i)*-.3s)
+    }
+
+    @keyframes grow {
+      from {
+        transform: scaleY(.5)
+      }
+    }
+
+    /* project grid */
+    .pgrid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px;
+      margin-top: 18px
+    }
+
+    .pc {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      border-radius: 24px;
+      overflow: hidden;
+      background: var(--ink);
+      color: var(--white);
+      transition: transform .35s cubic-bezier(.2, .7, .2, 1), box-shadow .35s;
+      transform-style: preserve-3d
+    }
+
+    .pc::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(360px circle at var(--mx, 50%) var(--my, 0%), rgba(255, 194, 26, .22), transparent 60%);
+      opacity: 0;
+      transition: opacity .3s;
+      pointer-events: none;
+      z-index: 2
+    }
+
+    .pc:hover {
+      box-shadow: 10px 10px 0 var(--ink)
+    }
+
+    .pc:hover::before {
+      opacity: 1
+    }
+
+    .pv {
+      height: 230px;
+      display: grid;
+      place-items: center;
+      overflow: hidden;
+      position: relative;
+      background: var(--bg)
+    }
+
+    .pv>* {
+      transition: transform .6s cubic-bezier(.2, .7, .2, 1)
+    }
+
+    .pv img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      object-position: center;
+      display: block
+    }
+
+    .pc:hover .pv>* {
+      transform: scale(1.07) translateY(-4px)
+    }
+
+    .pt {
+      padding: 18px 20px 22px;
+      display: flex;
+      justify-content: space-between;
+      align-items: flex-end;
+      gap: 12px;
+      position: relative;
+      z-index: 3
+    }
+
+    .pt small {
+      display: block;
+      color: #a8a6a0;
+      margin-bottom: 6px
+    }
+
+    .pt h3 {
+      font-size: 1.7rem
+    }
+
+    .arr {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: var(--yellow);
+      color: var(--ink);
+      display: grid;
+      place-items: center;
+      flex: none;
+      transition: transform .3s, background .3s
+    }
+
+    .arr svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.6;
+      transition: transform .3s
+    }
+
+    .pc:hover .arr {
+      background: var(--teal)
+    }
+
+    .pc:hover .arr svg {
+      transform: rotate(-45deg)
+    }
+
+    .mini {
+      width: 118px;
+      height: 190px;
+      border-radius: 20px;
+      background: rgba(0, 0, 0, .55);
+      border: 1px solid rgba(255, 255, 255, .18);
+      padding: 11px;
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+      box-shadow: 0 24px 44px -16px #000
+    }
+
+    .mini.wide {
+      width: min(270px, 76%);
+      height: 160px
+    }
+
+    .disc {
+      width: 78px;
+      height: 78px;
+      border-radius: 50%;
+      margin: 6px auto 4px;
+      background: conic-gradient(#ff5ca8, var(--yellow), var(--teal), #3d7bff, #ff5ca8);
+      display: grid;
+      place-items: center;
+      animation: spin2 6s linear infinite
+    }
+
+    .disc::after {
+      content: "";
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      background: #0a0a0c
+    }
+
+    @keyframes spin2 {
+      to {
+        transform: rotate(360deg)
+      }
+    }
+
+    .wave {
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      height: 30px;
+      justify-content: center
+    }
+
+    .wave i {
+      width: 4px;
+      border-radius: 3px;
+      background: var(--teal);
+      height: 30%;
+      animation: eq 1.1s ease-in-out infinite alternate;
+      animation-delay: calc(var(--i)*-.12s)
+    }
+
+    @keyframes eq {
+      to {
+        height: 100%
+      }
+    }
+
+    .dash {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 7px;
+      flex: 1
+    }
+
+    .dash .t {
+      grid-column: span 2;
+      background: linear-gradient(90deg, rgba(37, 201, 164, .5), rgba(255, 194, 26, .4))
+    }
+
+    /* case panel */
+    .case {
+      position: relative;
+      border-radius: 30px;
+      overflow: hidden;
+      color: var(--white);
+      padding: clamp(26px, 5vw, 64px);
+      background: radial-gradient(800px 500px at 90% 0, rgba(255, 120, 80, .35), transparent 60%), linear-gradient(150deg, #b3141e, var(--red-d) 70%, #1b0306)
+    }
+
+    .case::before {
+      content: "CASE";
+      position: absolute;
+      right: -2%;
+      bottom: -14%;
+      font-family: var(--display);
+      font-size: clamp(9rem, 30vw, 26rem);
+      line-height: .8;
+      color: rgba(0, 0, 0, .2);
+      pointer-events: none
+    }
+
+    .case h2 {
+      font-size: clamp(3rem, 9vw, 7.4rem);
+      max-width: 11ch;
+      position: relative
+    }
+
+    .case h2 em {
+      font-style: normal;
+      color: var(--yellow)
+    }
+
+    .case>p {
+      margin-top: 20px;
+      max-width: 46ch;
+      color: #ffd9d6;
+      position: relative
+    }
+
+    .case .row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 30px;
+      position: relative
+    }
+
+    .stats {
+      position: relative;
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 14px;
+      margin-top: clamp(34px, 5vw, 60px)
+    }
+
+    .stat {
+      border-top: 2px solid rgba(255, 255, 255, .4);
+      padding-top: 14px
+    }
+
+    .stat b {
+      display: block;
+      font-family: var(--display);
+      font-weight: 400;
+      font-size: clamp(2.6rem, 6vw, 4.8rem);
+      line-height: 1
+    }
+
+    .stat span {
+      font-size: .86rem;
+      color: #ffd9d6
+    }
+
+    /* prototypes */
+    .protos {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 18px
+    }
+
+    .proto {
+      position: relative;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      min-width: 0;
+      border: 2px solid var(--ink);
+      border-radius: 24px;
+      padding: 28px;
+      background: var(--white);
+      transition: transform .25s, box-shadow .25s, background .25s, color .25s;
+      overflow: hidden
+    }
+
+    .proto:hover {
+      transform: translate(-4px, -4px);
+      box-shadow: 10px 10px 0 var(--ink);
+      background: var(--ink);
+      color: var(--white)
+    }
+
+    .proto .tag {
+      color: var(--teal-t)
+    }
+
+    .proto:hover .tag {
+      color: var(--teal)
+    }
+
+    .proto h3 {
+      font-size: clamp(2.4rem, 4.4vw, 3.6rem)
+    }
+
+    .proto p {
+      color: var(--mut);
+      font-size: .95rem
+    }
+
+    .proto:hover p {
+      color: #b8b6b0
+    }
+
+    .proto .go {
+      margin-top: auto;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: var(--display);
+      text-transform: uppercase;
+      letter-spacing: .04em
+    }
+
+    .proto .go svg {
+      width: 16px;
+      height: 16px;
+      stroke: currentColor;
+      fill: none;
+      stroke-width: 2.6;
+      transition: transform .25s
+    }
+
+    .proto:hover .go svg {
+      transform: translate(4px, -4px)
+    }
+
+    /* services */
+    .svc {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      border-top: 2px solid var(--ink)
+    }
+
+    .s {
+      padding: 30px 26px 34px 0;
+      border-bottom: 2px solid var(--ink);
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+      min-width: 0
+    }
+
+    .s:not(:first-child) {
+      padding-left: 26px;
+      border-left: 2px solid var(--ink)
+    }
+
+    .s .no {
+      color: var(--red)
+    }
+
+    .s h3 {
+      font-size: clamp(2.2rem, 4vw, 3.2rem);
+      transition: color .25s
+    }
+
+    .s:hover h3 {
+      color: var(--teal-t)
+    }
+
+    .s p {
+      color: var(--mut);
+      font-size: .96rem
+    }
+
+    /* about */
+    .about {
+      display: grid;
+      grid-template-columns: .85fr 1.15fr;
+      gap: clamp(30px, 6vw, 80px);
+      align-items: center
+    }
+
+    .about>* {
+      min-width: 0
+    }
+
+    .polaroid {
+      position: relative;
+      background: var(--white);
+      padding: 14px 14px 56px;
+      box-shadow: 0 30px 50px -25px rgba(0, 0, 0, .55);
+      transform: rotate(-4deg);
+      transition: transform .5s cubic-bezier(.2, .8, .2, 1);
+      max-width: 420px;
+      margin-inline: auto
+    }
+
+    .polaroid:hover {
+      transform: rotate(0) scale(1.02)
+    }
+
+    .polaroid img {
+      display: block;
+      width: 100%;
+      aspect-ratio: 1;
+      object-fit: cover;
+      filter: saturate(1.1)
+    }
+
+    .polaroid figcaption {
+      position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 16px;
+      text-align: center;
+      font-family: var(--display);
+      text-transform: uppercase;
+      font-size: 1.5rem;
+      letter-spacing: .04em
+    }
+
+    .tape {
+      position: absolute;
+      top: -16px;
+      left: 50%;
+      width: 120px;
+      height: 34px;
+      margin-left: -60px;
+      background: rgba(255, 194, 26, .78);
+      transform: rotate(3deg)
+    }
+
+    .about h2 {
+      font-size: clamp(2.8rem, 6.4vw, 5.2rem)
+    }
+
+    .about h2 em {
+      font-style: normal;
+      color: var(--red)
+    }
+
+    .about .txt {
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      margin-top: 22px;
+      color: #3b3b38
+    }
+
+    .heal {
+      margin-top: 8px;
+      padding: 24px;
+      border-radius: 20px;
+      background: var(--ink);
+      color: var(--white)
+    }
+
+    .heal h3 {
+      font-size: 2.2rem;
+      color: var(--teal)
+    }
+
+    .heal p {
+      color: #c8c6c0;
+      margin-top: 10px;
+      font-size: .96rem
+    }
+
+    .tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 16px
+    }
+
+    .tags a {
+      font-family: var(--mono);
+      font-size: .74rem;
+      padding: 7px 12px;
+      border-radius: 99px;
+      border: 1px solid rgba(255, 255, 255, .3);
+      transition: background .2s, color .2s
+    }
+
+    .tags a:hover {
+      background: var(--yellow);
+      color: var(--ink);
+      border-color: var(--yellow)
+    }
+
+    /* cta */
+    .cta {
+      position: relative;
+      border-radius: 34px;
+      overflow: hidden;
+      background: radial-gradient(800px 500px at 20% 100%, rgba(224, 37, 47, .5), transparent 60%), linear-gradient(180deg, #151517, #08080a);
+      color: var(--white);
+      display: grid;
+      grid-template-columns: .9fr 1.1fr;
+      gap: 10px;
+      padding: clamp(24px, 5vw, 60px) clamp(20px, 5vw, 60px) 0;
+      align-items: end
+    }
+
+    .cta>* {
+      min-width: 0
+    }
+
+    .cta-bust {
+      position: relative;
+      height: clamp(300px, 40vw, 520px);
+      align-self: end;
+      margin-bottom: -4px
+    }
+
+    .cta-bust .wrapb {
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      height: 100%;
+      aspect-ratio: 1000/1234;
+      transform: translateX(-50%) scaleX(-1);
+      transition: transform .15s linear;
+      filter: drop-shadow(0 20px 30px rgba(0, 0, 0, .6))
+    }
+
+    .cta-txt {
+      padding-bottom: clamp(24px, 5vw, 60px)
+    }
+
+    .cta h2 {
+      font-size: clamp(2.6rem, 7vw, 6rem)
+    }
+
+    .cta h2 .out {
+      color: transparent;
+      -webkit-text-stroke: 2px var(--white)
+    }
+
+    .cta h2 .rd {
+      color: var(--red)
+    }
+
+    .cta .intro {
+      margin-top: 18px;
+      color: #c8c6c0;
+      max-width: 44ch
+    }
+
+    .reach {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 12px;
+      margin-top: 26px
+    }
+
+    .copy {
+      display: inline-flex;
+      align-items: center;
+      gap: 12px;
+      padding: 7px 7px 7px 18px;
+      border-radius: 8px;
+      background: rgba(255, 255, 255, .08);
+      border: 1px solid rgba(255, 255, 255, .2);
+      font-family: var(--mono);
+      font-size: .84rem;
+      max-width: 100%
+    }
+
+    .copy span {
+      overflow-wrap: anywhere;
+      user-select: all
+    }
+
+    .copy button {
+      border: 0;
+      border-radius: 6px;
+      padding: 9px 14px;
+      font-family: var(--display);
+      text-transform: uppercase;
+      letter-spacing: .05em;
+      background: var(--yellow);
+      color: var(--ink);
+      cursor: pointer;
+      font-size: .86rem
+    }
+
+    .soc {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      margin-top: 22px
+    }
+
+    .soc a {
+      font-family: var(--mono);
+      font-size: .76rem;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      padding: 9px 14px;
+      border-radius: 99px;
+      border: 1px solid rgba(255, 255, 255, .3);
+      transition: background .2s, color .2s
+    }
+
+    .soc a:hover {
+      background: var(--white);
+      color: var(--ink)
+    }
+
+    /* thanks */
+    .thanks {
+      padding-block: clamp(40px, 6vw, 80px) 30px;
+      text-align: left
+    }
+
+    .thanks h2 {
+      font-size: clamp(3.4rem, 13.5vw, 12rem);
+      line-height: .86
+    }
+
+    .thanks h2 em {
+      font-style: normal;
+      color: var(--teal-t)
+    }
+
+    .heart {
+      display: inline-block;
+      color: var(--red);
+      animation: beat 1.2s ease-in-out infinite;
+      transform-origin: center
+    }
+
+    @keyframes beat {
+
+      0%,
+      100% {
+        transform: scale(1)
+      }
+
+      15% {
+        transform: scale(1.18)
+      }
+
+      30% {
+        transform: scale(1)
+      }
+
+      45% {
+        transform: scale(1.12)
+      }
+    }
+
+    footer {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      gap: 12px;
+      padding-block: 20px 36px;
+      border-top: 2px solid var(--ink);
+      color: var(--mut);
+      font-size: .86rem
+    }
+
+    /* scroll reveal: transform only, content stays readable at rest */
+    .js .rv {
+      transform: translateY(38px);
+      transition: transform .9s cubic-bezier(.2, .8, .2, 1);
+      transition-delay: var(--d, 0s)
+    }
+
+    .js .rv.on {
+      transform: none
+    }
+
+    @media (max-width:1000px) {
+      .stmt {
+        grid-template-columns: 1fr
+      }
+
+      .stmt .right {
+        text-align: left;
+        padding-top: 0
+      }
+
+      .feature {
+        grid-template-columns: 1fr
+      }
+
+      .ft-vis {
+        height: 360px
+      }
+
+      .pgrid,
+      .protos {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .svc {
+        grid-template-columns: 1fr
+      }
+
+      .s:not(:first-child) {
+        padding-left: 0;
+        border-left: 0
+      }
+
+      .s {
+        padding-right: 0
+      }
+
+      .about,
+      .cta {
+        grid-template-columns: 1fr
+      }
+
+      .stats {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .bottom {
+        position: static;
+        flex-direction: column;
+        align-items: flex-start;
+        padding-block: 22px 44px
+      }
+
+      .hero-copy {
+        max-width: 520px
+      }
+
+      .hero-note {
+        text-align: left;
+        align-items: flex-start;
+        max-width: none
+      }
+
+      .stage {
+        height: clamp(380px, 78vw, 640px)
+      }
+    }
+
+    @media (max-width:700px) {
+      .links {
+        display: none
+      }
+
+      .pgrid,
+      .protos {
+        grid-template-columns: 1fr
+      }
+
+      .stage {
+        height: 112vw
+      }
+
+      .name {
+        top: 4%
+      }
+
+      .bust {
+        height: 62%;
+        right: -26vw;
+        bottom: -1%
+      }
+
+      .big-line {
+        font-size: clamp(2.2rem, 11vw, 3.4rem)
+      }
+
+      .ribbons {
+        height: 156px
+      }
+
+      .rib {
+        font-size: 1.3rem
+      }
+
+      .r2 {
+        top: 78px
+      }
+
+      .ph1 {
+        left: 0
+      }
+
+      .ph2 {
+        left: 38%
+      }
+
+      .ft-bust {
+        right: -18%
+      }
+    }
+
+    @media (prefers-reduced-motion:reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation: none !important;
+        transition: none !important
+      }
+
+      .js .rv {
+        transform: none
+      }
+    }
+  </style>
+
+  <div class="progress" id="progress" aria-hidden="true"></div>
+
+  <nav>
+    <div class="wrap nav">
+      <a class="logo" href="#top"><b></b>AshRAFF UX</a>
+      <div class="links"><a href="index.html"
+          style="color:var(--teal);opacity:1;display:inline-flex;align-items:center;gap:6px"><span>←</span> Ashnimator
+          Studios</a><a href="#work">Work</a><a href="#case">Case study</a><a
+          href="https://sites.google.com/view/ashraffuxsite/resume" target="_blank" rel="noopener">Resume</a><a
+          href="#prototypes">Prototypes</a><a href="#about">About</a></div>
+      <a class="yb" href="#contact">Hire me</a>
+    </div>
+  </nav>
+
+  <header class="hero" id="top">
+    <div class="hero-in">
+      <div class="meta mono"><span>UI/UX design · Motion graphics</span><span>Part of <a href="index.html"
+            style="color:var(--teal);text-decoration:underline">Ashnimator Studios ↗</a></span></div>
+      <div class="stage" id="stage">
+        <h1 class="name" aria-label="AshraffUX">
+          <span><i style="--i:0">A</i></span><span><i style="--i:1">S</i></span><span><i
+              style="--i:2">H</i></span><span><i style="--i:3">R</i></span><span><i style="--i:4">A</i></span><span><i
+              style="--i:5">F</i></span><span><i style="--i:6">F</i></span>
+        </h1>
+        <div class="bust" id="bust">
+          <div class="rise">
+            <div class="float">
+              <img class="statue" src="assets/statue-hero.webp"
+                alt="Marble statue of Ashraff in a backwards cap and orange glasses, reading a book" width="1800"
+                height="1128">
+              <span class="glow" aria-hidden="true"></span>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="bottom">
+        <div class="hero-copy">
+          <div class="big">design communication<br><em>PHILOSOPHER</em></div>
+          <p>I'm Ashraff Adeyemo. For ten years I have designed interfaces and made motion for media, brands and
+            products that need to be understood fast.</p>
+          <div class="row"><a class="yb" href="#work">View my work <svg viewBox="0 0 24 24">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg></a><a class="ghost" href="#contact">Start a project</a></div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <section class="statement tear">
+    <div class="wrap">
+      <div class="stmt">
+        <div class="side rv"><b>The goal</b>Usable design that carries its message clearly, from the first wireframe to
+          the final render.</div>
+        <div class="main">
+          <div class="big-line shift" data-shift="-1">UI/UX designer and</div>
+          <div class="big-line shift hl" data-shift="1">motion artist,</div>
+          <div class="big-line shift hr" data-shift="-1">media, brands <span class="seal">©</span></div>
+          <div class="big-line shift" data-shift="1">and products.</div>
+        </div>
+        <div class="right rv" style="--d:.1s">Ten years of media production, digital art and design communication, in
+          academia and in industry.</div>
+      </div>
+    </div>
+  </section>
+
+  <div class="ribbons" aria-hidden="true">
+    <div class="rib r2">
+      <div class="t"><span>Prototyping</span><span>Video editing</span><span>Digital art</span><span>Design
+          communication</span><span>Prototyping</span><span>Video editing</span><span>Digital art</span><span>Design
+          communication</span></div>
+    </div>
+    <div class="rib r1">
+      <div class="t"><span>UI design</span><span>UX design</span><span>Motion graphics</span><span>Media
+          production</span><span>UI design</span><span>UX design</span><span>Motion graphics</span><span>Media
+          production</span></div>
+    </div>
+  </div>
+
+  <section id="work" style="padding-top:clamp(30px,5vw,60px)">
+    <div class="wrap">
+      <div class="label rv">
+        <h2>Selected <em>work</em></h2>
+        <p>Seven interface projects. Open any one to see the full screens in my gallery.</p>
+      </div>
+
+      <a class="feature rv" href="https://sites.google.com/view/ashraffuxsite/ui-gallery/giant-bank-app-ui"
+        target="_blank" rel="noopener">
+        <div>
+          <small class="mono">App UI</small>
+          <h3>Giant Bank <em>App UI</em></h3>
+          <p>The lead project in my UI gallery. Open it to step through every screen.</p>
+          <span class="yb">View project <svg viewBox="0 0 24 24">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg></span>
+        </div>
+        <div class="ft-vis" aria-hidden="true">
+          <div class="ft-gif-wrap">
+            <img src="assets/giant bank.gif" alt="Giant Bank App UI preview" loading="lazy">
+          </div>
+          <div class="phone ph1">
+            <div class="scr">
+              <div class="b h" style="width:45%"></div>
+              <div class="vcard"></div>
+              <div class="b h"></div>
+              <div class="b s"></div>
+              <div class="b" style="height:22px"></div>
+              <div class="b g" style="height:22px"></div>
+            </div>
+          </div>
+          <div class="phone ph2">
+            <div class="scr">
+              <div class="b h" style="width:55%"></div>
+              <div class="bars"><i style="--h:50%;--i:1"></i><i style="--h:82%;--i:2"></i><i
+                  style="--h:62%;--i:3"></i><i style="--h:96%;--i:4"></i><i style="--h:70%;--i:5"></i></div>
+              <div class="b r" style="height:20px"></div>
+            </div>
+          </div>
+        </div>
+      </a>
+
+      <div class="pgrid">
+        <a class="pc rv" href="https://sites.google.com/view/ashraffuxsite/ui-gallery/rad-player-app-ui" target="_blank"
+          rel="noopener">
+          <div class="pv" style="--bg:linear-gradient(150deg,#5a1a5e,#14060f 75%)">
+            <img src="assets/Rad player.gif" alt="Rad Player App UI" loading="lazy">
+          </div>
+          <div class="pt">
+            <div><small class="mono">App UI</small>
+              <h3>Rad Player</h3>
+            </div><span class="arr"><svg viewBox="0 0 24 24">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg></span>
+          </div>
+        </a>
+        <a class="pc rv" style="--d:.07s" href="https://sites.google.com/view/ashraffuxsite/ui-gallery/dianote-app-ui"
+          target="_blank" rel="noopener">
+          <div class="pv" style="--bg:linear-gradient(150deg,#0b4a3b,#04130f 75%)">
+            <img src="assets/Suqsphere.gif" alt="Suqsphere App UI" loading="lazy"
+              style="height:85%;width:auto;max-width:40%;object-fit:contain;border-radius:18px;box-shadow:0 14px 32px rgba(0,0,0,.55);border:1px solid rgba(255,255,255,.15)">
+          </div>
+          <div class="pt">
+            <div><small class="mono">App UI</small>
+              <h3>Suqsphere</h3>
+            </div><span class="arr"><svg viewBox="0 0 24 24">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg></span>
+          </div>
+        </a>
+        <a class="pc rv" style="--d:.14s"
+          href="https://sites.google.com/view/ashraffuxsite/ui-gallery/urion-re-engine-ui" target="_blank"
+          rel="noopener">
+          <div class="pv" style="--bg:linear-gradient(150deg,#7a0d16,#1b0306 75%)">
+            <img src="assets/urion.gif" alt="Urion RE-engine UI" loading="lazy">
+          </div>
+          <div class="pt">
+            <div><small class="mono">Product UI</small>
+              <h3>Urion RE-engine</h3>
+            </div><span class="arr"><svg viewBox="0 0 24 24">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg></span>
+          </div>
+        </a>
+        <a class="pc rv" href="https://sites.google.com/view/ashraffuxsite/ui-gallery/feg-appweb-ui" target="_blank"
+          rel="noopener">
+          <div class="pv" style="--bg:linear-gradient(150deg,#2a2a30,#0a0a0c 75%)">
+            <img src="assets/feg.gif" alt="Feg App and Web UI" loading="lazy">
+          </div>
+          <div class="pt">
+            <div><small class="mono">App and web UI</small>
+              <h3>Feg App/Web</h3>
+            </div><span class="arr"><svg viewBox="0 0 24 24">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg></span>
+          </div>
+        </a>
+        <a class="pc rv" style="--d:.07s" href="https://sites.google.com/view/ashraffuxsite/ui-gallery/wood-work-app-ui"
+          target="_blank" rel="noopener">
+          <div class="pv" style="--bg:linear-gradient(150deg,#6b3d1a,#140a04 75%)">
+            <img src="assets/wood work.gif" alt="Wood Work App UI" loading="lazy">
+          </div>
+          <div class="pt">
+            <div><small class="mono">App UI</small>
+              <h3>Wood Work</h3>
+            </div><span class="arr"><svg viewBox="0 0 24 24">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg></span>
+          </div>
+        </a>
+        <a class="pc rv" style="--d:.14s" href="https://sites.google.com/view/ashraffuxsite/ui-gallery/landing-page"
+          target="_blank" rel="noopener">
+          <div class="pv" style="--bg:linear-gradient(150deg,#14315e,#060a14 75%)">
+            <div class="mini wide" style="padding:16px;justify-content:center;align-items:flex-start;gap:9px">
+              <div class="b h" style="width:84%;height:14px"></div>
+              <div class="b h" style="width:56%;height:14px"></div>
+              <div class="b s"></div>
+              <div class="b g" style="width:78px;height:22px;border-radius:99px"></div>
+            </div>
+          </div>
+          <div class="pt">
+            <div><small class="mono">Web</small>
+              <h3>Landing Page</h3>
+            </div><span class="arr"><svg viewBox="0 0 24 24">
+                <path d="M5 12h14M13 6l6 6-6 6" />
+              </svg></span>
+          </div>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section id="case" style="padding-top:0">
+    <div class="wrap">
+      <div class="case rv" id="resume">
+        <span class="mono" style="color:var(--yellow);position:relative">Case study and resume</span>
+        <h2 style="margin-top:14px">explore case<em> studies</em></h2>
+        <p>Read the case study to follow my process from problem to finished screens, and open my resume for the full
+          ten-year history.</p>
+        <div class="row">
+          <a class="yb" href="https://sites.google.com/view/ashraffuxsite/case-study" target="_blank"
+            rel="noopener">Read the case study <svg viewBox="0 0 24 24">
+              <path d="M5 12h14M13 6l6 6-6 6" />
+            </svg></a>
+          <a class="ghost" href="https://sites.google.com/view/ashraffuxsite/resume" target="_blank" rel="noopener">Open
+            resume</a>
+        </div>
+        <div class="stats">
+          <div class="stat"><b data-n="10" data-s="+">10+</b><span>Years in creative production</span></div>
+          <div class="stat"><b data-n="7" data-s="">7</b><span>UI projects in the gallery</span></div>
+          <div class="stat"><b data-n="3" data-s="">3</b><span>Clickable Figma prototypes</span></div>
+          <div class="stat"><b data-n="2" data-s="">2</b><span>YouTube channels</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="prototypes" style="padding-top:0">
+    <div class="wrap">
+      <div class="label rv">
+        <h2>Prototypes <em>AND DESIGNS</em></h2>
+        <p>Click through the flows. Figma prototypes you can open and use in your browser.</p>
+      </div>
+      <div class="protos">
+        <a class="proto rv"
+          href="https://www.figma.com/design/X8VuVPNMn2TWhlfJsOgCcm/Payville?node-id=0-1&t=hgCJ1dussu3irPUI-1"
+          target="_blank" rel="noopener">
+          <span class="tag mono">Figma design</span>
+          <h3>Payville</h3>
+          <p>A payments experience designed screen by screen, open in Figma.</p>
+          <span class="go">Open in Figma <svg viewBox="0 0 24 24">
+              <path d="M7 17L17 7M8 7h9v9" />
+            </svg></span>
+        </a>
+        <a class="proto rv" style="--d:.08s"
+          href="https://www.figma.com/proto/CuvOVjh7tkx99fyabz7Tda/IslamAI?node-id=1-3&starting-point-node-id=19%3A65&t=f5y6j4M5BcXkIp89-1"
+          target="_blank" rel="noopener">
+          <span class="tag mono">Figma prototype</span>
+          <h3>IslamAI</h3>
+          <p>An interactive prototype you can tap through from the starting screen.</p>
+          <span class="go">Open prototype <svg viewBox="0 0 24 24">
+              <path d="M7 17L17 7M8 7h9v9" />
+            </svg></span>
+        </a>
+        <a class="proto rv" style="--d:.16s"
+          href="https://www.figma.com/proto/ZmvsvhVWI1gurfKoo6yHot/Ride-Along?node-id=0-1&t=Wo7qUEZVnh5YB7rI-1"
+          target="_blank" rel="noopener">
+          <span class="tag mono">Figma prototype</span>
+          <h3>RideAlong</h3>
+          <p>A clickable ride flow built to test how it feels before development.</p>
+          <span class="go">Open prototype <svg viewBox="0 0 24 24">
+              <path d="M7 17L17 7M8 7h9v9" />
+            </svg></span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section style="padding-top:0">
+    <div class="wrap">
+      <div class="label rv">
+        <h2>What I <em>do</em></h2>
+        <p>One person across the whole creative chain.</p>
+      </div>
+      <div class="svc">
+        <div class="s rv"><span class="no mono">Product</span>
+          <h3>UI and UX design</h3>
+          <p>Usable, well-communicated interfaces for apps, web products and landing pages, with prototypes you can
+            test.</p>
+        </div>
+        <div class="s rv" style="--d:.08s"><span class="no mono">Animation</span>
+          <h3>Motion graphics</h3>
+          <p>Motion design that gives brands and media outlets an international standard of polish.</p>
+        </div>
+        <div class="s rv" style="--d:.16s"><span class="no mono">Production</span>
+          <h3>Video and media</h3>
+          <p>Magazines, documentaries, advertising content and social media presence for institutions and individuals.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="about" style="padding-top:0">
+    <div class="wrap about">
+      <figure class="polaroid rv" style="margin-block:0">
+        <span class="tape"></span>
+        <img src="assets/me-photo.jpg" alt="Portrait of Ashraff Adeyemo wearing a blue cap and headphones, looking up"
+          loading="lazy" width="760" height="760">
+        <figcaption>Ashraff, off duty</figcaption>
+      </figure>
+      <div class="rv" style="--d:.1s">
+        <span class="mono" style="color:var(--red)">About</span>
+        <h2 style="margin-top:12px">Creativity you can <em>use</em></h2>
+        <div class="txt">
+          <p>I love creativity, usable design and design communication. Across communications, media production, design
+            and motion graphics, I have helped organisations improve their image and reputation with content that works.
+          </p>
+          <p>I plan and deliver with my team in line with global practice, take direction well and lead juniors toward
+            shared goals. Working with academic institutions and industry has taught me to adapt to different work
+            cultures and to stay gender sensitive. I also run my own media production practice for clients and
+            multimedia enthusiasts.</p>
+          <div class="heal">
+            <h3>Heal TV</h3>
+            <p>With friends, I started Heal TV, an ethical online television channel that creates alternative
+              programming with international-appeal production to encourage responsibility. I supply the motion graphics
+              and have been the video editor since day one.</p>
+            <div class="tags">
+              <a href="https://www.youtube.com/channel/UC0wQ7Dq-BSFLhab3pPT-wOw" target="_blank" rel="noopener">Watch
+                Heal TV</a>
+              <a href="https://www.youtube.com/user/ashnimatornigeria" target="_blank" rel="noopener">YouTube: Ashraff
+                Adeyemo</a>
+              <a href="https://www.instagram.com/ashnimator/" target="_blank" rel="noopener">@ashnimator</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" style="padding-top:0">
+    <div class="wrap">
+      <div class="cta rv">
+        <div class="cta-bust" aria-hidden="true">
+          <div class="wrapb">
+            <div class="reveal" data-reveal data-flip>
+              <img src="assets/face-marble.webp" alt="" loading="lazy"><img class="col" src="assets/face-color.webp"
+                alt="" loading="lazy">
+            </div>
+          </div>
+        </div>
+        <div class="cta-txt">
+          <span class="mono" style="color:var(--teal)">Contact</span>
+          <h2 style="margin-top:14px">Thinking of a new project? <span class="out">Let's do it</span> <span
+              class="rd">together</span></h2>
+          <p class="intro">Tell me what you are building. I will help you shape the interface, the prototype and the
+            motion around it.</p>
+          <div class="reach">
+            <div class="copy"><span id="mail">ashraff.adeyemo@gmail.com</span><button type="button"
+                data-copy="mail">Copy</button></div>
+            <div class="copy"><span id="tel">+234 815 572 5102</span><button type="button" data-copy="tel">Copy</button>
+            </div>
+          </div>
+          <div class="soc">
+            <a href="https://www.behance.net/ashraff_adeyemo" target="_blank" rel="noopener">Behance</a>
+            <a href="https://www.linkedin.com/in/ashraff-adeyemo/" target="_blank" rel="noopener">LinkedIn</a>
+            <a href="https://twitter.com/ashnimator" target="_blank" rel="noopener">Twitter</a>
+            <a href="https://www.instagram.com/ashnimator/" target="_blank" rel="noopener">Instagram</a>
+            <a href="https://www.facebook.com/ashraffa3/" target="_blank" rel="noopener">Facebook</a>
+          </div>
+        </div>
+      </div>
+      <div class="thanks rv">
+        <h2>Thank you <em>for</em> visiting <span class="heart">♥</span></h2>
+      </div>
+      <footer><span>Ashraff Adeyemo • UI/UX designer &amp; motion artist • <a href="index.html"
+            style="color:var(--ink);text-decoration:underline;font-weight:700">Ashnimator Studios</a></span><a
+          href="#top" style="color:var(--ink);font-weight:700">Back to top</a></footer>
+    </div>
+  </section>
+
+  <script>
+    (function () {
+      var doc = document.documentElement, reduce = matchMedia('(prefers-reduced-motion: reduce)').matches, fine = matchMedia('(pointer: fine)').matches;
+      doc.classList.add('js');
+
+      /* torn paper edge */
+      try {
+        var pts = ['0,40'], x = 0, y;
+        while (x < 1200) { y = 4 + Math.random() * 20; pts.push(x.toFixed(0) + ',' + y.toFixed(1)); x += 14 + Math.random() * 26 }
+        pts.push('1200,' + (8 + Math.random() * 10).toFixed(1), '1200,40');
+        var svg = "<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 40' preserveAspectRatio='none'><polygon points='" + pts.join(' ') + "'/></svg>";
+        doc.style.setProperty('--tear', 'url("data:image/svg+xml,' + encodeURIComponent(svg) + '")');
+      } catch (e) { }
+
+      /* scroll reveal */
+      var rv = [].slice.call(document.querySelectorAll('.rv'));
+      function all() { rv.forEach(function (e) { e.classList.add('on') }) }
+      if ('IntersectionObserver' in window && !reduce) {
+        var io = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { e.target.classList.add('on'); io.unobserve(e.target) } }) }, { threshold: .1, rootMargin: '0px 0px -5% 0px' });
+        rv.forEach(function (e) { io.observe(e) }); setTimeout(all, 6000);
+      } else all();
+
+      /* counters */
+      function count(el) {
+        var n = +el.dataset.n, s = el.dataset.s || '';
+        if (reduce) { el.textContent = n + s; return }
+        var t0 = performance.now();
+        (function f(t) { var p = Math.min(1, (t - t0) / 1400), e = 1 - Math.pow(1 - p, 3); el.textContent = Math.round(n * e) + (p >= 1 ? s : ''); if (p < 1) requestAnimationFrame(f) })(t0);
+      }
+      var cs = [].slice.call(document.querySelectorAll('[data-n]'));
+      if ('IntersectionObserver' in window) {
+        var ci = new IntersectionObserver(function (es) { es.forEach(function (e) { if (e.isIntersecting) { count(e.target); ci.unobserve(e.target) } }) }, { threshold: .6 });
+        cs.forEach(function (e) { ci.observe(e) });
+      }
+
+      /* progress + scroll-linked line shifts */
+      var pg = document.getElementById('progress'), shifts = [].slice.call(document.querySelectorAll('.shift')), ticking = false;
+      function onScroll() {
+        var h = doc.scrollHeight - innerHeight; pg.style.transform = 'scaleX(' + (h > 0 ? scrollY / h : 0) + ')';
+        if (!reduce) {
+          shifts.forEach(function (el) {
+            var r = el.getBoundingClientRect(), p = (r.top + r.height / 2 - innerHeight / 2) / innerHeight;
+            el.style.transform = 'translateX(' + (p * (+el.dataset.shift) * (innerWidth < 700 ? 24 : 70)) + 'px)';
+          })
+        }
+        ticking = false;
+      }
+      addEventListener('scroll', function () { if (!ticking) { ticking = true; requestAnimationFrame(onScroll) } }, { passive: true }); onScroll();
+
+      /* colour reveal: pointer spotlight, auto sweep until the visitor takes over */
+      var revs = [].slice.call(document.querySelectorAll('[data-reveal]'));
+      revs.forEach(function (el) {
+        var col = el.querySelector('.col'), flip = el.hasAttribute('data-flip'), manual = false, vis = true, t0 = Math.random() * 1000;
+        function put(x, y, r) { col.style.setProperty('--rx', x + 'px'); col.style.setProperty('--ry', y + 'px'); col.style.setProperty('--rr', r + 'px') }
+        function local(e) { var b = el.getBoundingClientRect(), x = e.clientX - b.left; if (flip) x = b.width - x; return [x, e.clientY - b.top, b] }
+        el.addEventListener('pointermove', function (e) { var l = local(e); manual = true; put(l[0], l[1], Math.max(90, l[2].width * .2)) });
+        el.addEventListener('pointerleave', function () { setTimeout(function () { manual = false }, 900) });
+        if ('IntersectionObserver' in window) { new IntersectionObserver(function (es) { vis = es[0].isIntersecting }).observe(el) }
+        if (!reduce) {
+          (function loop(t) {
+            if (vis && !manual) {
+              var b = el.getBoundingClientRect(), w = b.width, h = b.height, k = (t + t0) / 1000;
+              put(w * (.5 + .28 * Math.sin(k * .9)), h * (.34 + .22 * Math.sin(k * 1.3 + 1)), w * .2)
+            }
+            requestAnimationFrame(loop)
+          })(performance.now());
+        } else { put(el.offsetWidth * .5, el.offsetHeight * .38, el.offsetWidth * .2) }
+      });
+
+      /* hero parallax */
+      var stage = document.getElementById('stage'), bust = document.getElementById('bust'), nm = stage.querySelector('.name');
+      if (fine && !reduce) {
+        document.getElementById('top').addEventListener('mousemove', function (e) {
+          var r = stage.getBoundingClientRect(), x = (e.clientX - (r.left + r.width / 2)) / r.width, y = (e.clientY - (r.top + r.height / 2)) / r.height;
+          bust.style.transform = 'translate3d(' + (x * -26) + 'px,' + (y * -12) + 'px,0)';
+          nm.style.transform = 'translate(' + (x * 14) + 'px,' + (y * 8) + 'px)';
+        });
+      }
+
+      /* card spotlight + tilt */
+      [].slice.call(document.querySelectorAll('.pc')).forEach(function (c) {
+        c.addEventListener('mousemove', function (e) {
+          var r = c.getBoundingClientRect(), px = (e.clientX - r.left) / r.width, py = (e.clientY - r.top) / r.height;
+          c.style.setProperty('--mx', (px * 100) + '%'); c.style.setProperty('--my', (py * 100) + '%');
+          if (!reduce && fine) c.style.transform = 'perspective(900px) rotateX(' + ((.5 - py) * 5) + 'deg) rotateY(' + ((px - .5) * 6) + 'deg) translateY(-4px)';
+        });
+        c.addEventListener('mouseleave', function () { c.style.transform = '' });
+      });
+
+      /* copy buttons */
+      [].slice.call(document.querySelectorAll('[data-copy]')).forEach(function (b) {
+        b.addEventListener('click', function () {
+          var node = document.getElementById(b.dataset.copy), txt = node.textContent;
+          function sel() { var r = document.createRange(); r.selectNodeContents(node); var s = getSelection(); s.removeAllRanges(); s.addRange(r); b.textContent = 'Selected' }
+          function ok() { b.textContent = 'Copied' }
+          try { navigator.clipboard.writeText(txt).then(ok, sel) } catch (e) { sel() }
+          setTimeout(function () { b.textContent = 'Copy' }, 1800);
+        });
+      });
+    })();
+  </script>
+
+</body>
+
+</html>

@@ -46,3 +46,13 @@
   from = "/contact"
   to = "/#contact"
   status = 301
+
+[[redirects]]
+  from = "/uiux"
+  to = "/AshraffUX.html"
+  status = 301
+
+[[redirects]]
+  from = "/ux"
+  to = "/AshraffUX.html"
+  status = 301
