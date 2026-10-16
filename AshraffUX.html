@@ -1132,7 +1132,9 @@
       overflow: hidden;
       color: var(--white);
       padding: clamp(26px, 5vw, 64px);
-      background: radial-gradient(800px 500px at 90% 0, rgba(255, 120, 80, .35), transparent 60%), linear-gradient(150deg, #b3141e, var(--red-d) 70%, #1b0306)
+      background: radial-gradient(800px 500px at 90% 0, rgba(255, 120, 80, .35), transparent 60%), linear-gradient(150deg, #b3141e, var(--red-d) 70%, #1b0306);
+      z-index: 1;
+      /* Establishes a stacking context */
     }
 
     .case::before {
@@ -1144,7 +1146,67 @@
       font-size: clamp(9rem, 30vw, 26rem);
       line-height: .8;
       color: rgba(0, 0, 0, .2);
-      pointer-events: none
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Ensure all text and content inside .case render above the animation */
+    .case>span,
+    .case h2,
+    .case>p,
+    .case .row,
+    .case .stats {
+      position: relative;
+      z-index: 2;
+    }
+
+    /* phil image switcher placed behind text */
+    .phil-wrap {
+      position: absolute;
+      inset: 0;
+      margin: 0;
+      height: auto;
+      display: block;
+      pointer-events: none;
+      z-index: 1;
+      /* Rendered under text (z-index: 2) but above background */
+    }
+
+    .phil-wrap img {
+      position: absolute;
+      right: -1%;
+      bottom: 0;
+      height: 220%;
+      width: auto;
+      max-width: 105%;
+      object-fit: contain;
+      object-position: bottom right;
+      filter: drop-shadow(-10px 20px 40px rgba(0, 0, 0, .35));
+      transition:
+        none transform .55s cubic-bezier(.2, .8, .2, 1);
+      user-select: none;
+      -webkit-user-drag: none;
+    }
+
+    .phil-wrap .phil-down {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    .phil-wrap .phil-up {
+      opacity: 0;
+      transform: translateY(12px)
+    }
+
+    /* trigger hover only after scroll-in (section gets .case-active class) */
+    .case-active:hover .phil-wrap .phil-down {
+      opacity: 0;
+      transform: translateY(-10px)
+    }
+
+    .case-active:hover .phil-wrap .phil-up {
+      opacity: 1;
+      transform: translateY(0)
     }
 
     .case h2 {
@@ -1460,10 +1522,10 @@
       position: absolute;
       right: -10px;
       bottom: 0;
-      top: clamp(-120px, -10vw, -60px);
+      top: clamp(-40px, -50vw, -20px);
       z-index: 3;
       pointer-events: none;
-      aspect-ratio: 1001/767;
+      aspect-ratio: 1052/709;
       height: auto;
       max-height: none
     }
@@ -1998,6 +2060,10 @@
           <div class="stat"><b data-n="3" data-s="">3</b><span>Clickable Figma prototypes</span></div>
           <div class="stat"><b data-n="2" data-s="">2</b><span>YouTube channels</span></div>
         </div>
+        <div class="phil-wrap" aria-hidden="true">
+          <img class="phil-down" src="assets/phil down.png" alt="" width="600">
+          <img class="phil-up" src="assets/phil up.png" alt="" width="600">
+        </div>
       </div>
     </div>
   </section>
@@ -2074,7 +2140,7 @@
         <span class="tape"></span>
         <img src="assets/me-photo.jpg" alt="Portrait of Ashraff Adeyemo wearing a blue cap and headphones, looking up"
           loading="lazy" width="760" height="760">
-        <figcaption>Ashraff, off duty</figcaption>
+        <figcaption>Ashraff, Active</figcaption>
       </figure>
       <div class="rv" style="--d:.1s">
         <span class="mono" style="color:var(--red)">About</span>
@@ -2246,6 +2312,15 @@
           setTimeout(function () { b.textContent = 'Copy' }, 1800);
         });
       });
+
+      /* phil image: activate hover swap once section is in view */
+      var caseEl = document.getElementById('resume');
+      if (caseEl && 'IntersectionObserver' in window) {
+        new IntersectionObserver(function (es) {
+          if (es[0].isIntersecting) caseEl.classList.add('case-active');
+          else caseEl.classList.remove('case-active');
+        }, { threshold: 0.2 }).observe(caseEl);
+      }
     })();
   </script>
 
