@@ -1644,6 +1644,22 @@ body.menu-open {
   width: 20px;
   height: 20px;
 }
+.social img.i,
+.social .i--img {
+  width: 20px;
+  height: 20px;
+  object-fit: contain;
+  display: block;
+  filter: brightness(0) invert(1);
+  transition: filter 0.4s;
+}
+.social a:hover img.i,
+.social a:hover .i--img,
+.social a:focus-visible img.i,
+.social a:focus-visible .i--img {
+  filter: brightness(0);
+}
+
 
 .form {
   position: relative;
